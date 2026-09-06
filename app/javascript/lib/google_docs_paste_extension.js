@@ -42,6 +42,7 @@ class GoogleDocsPasteExtension extends Lexxy.Extension {
 }
 
 function preserveGoogleDocsFormatting(doc) {
+  stripImageWrapperFormatting(doc)
   removeRedundantBlankSeparators(doc)
 
   const rules = formattingRules(doc)
@@ -61,6 +62,21 @@ function preserveGoogleDocsFormatting(doc) {
       const wrapper = doc.createElement(tag)
       wrapper.append(...element.childNodes)
       element.append(wrapper)
+    }
+  }
+}
+
+// Google Docs wraps pasted images in spans carrying text-only presentation
+// styles. Lexical's span conversion applies those styles to text children and
+// drops a non-text image before Lexxy can turn its data URI into an upload.
+function stripImageWrapperFormatting(doc) {
+  for (const image of doc.querySelectorAll("img")) {
+    let wrapper = image.parentElement
+
+    while (wrapper?.tagName === "SPAN" && wrapper.textContent.trim() === "") {
+      wrapper.removeAttribute("class")
+      wrapper.removeAttribute("style")
+      wrapper = wrapper.parentElement
     }
   }
 }

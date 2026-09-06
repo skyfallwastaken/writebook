@@ -120,7 +120,11 @@ class EditPageTest < ApplicationSystemTestCase
       html: <<~HTML
         <meta charset="utf-8">
         <b id="docs-internal-guid-image" style="font-weight: normal">
-          <p><span><img src="data:image/png;base64,#{image_data}"></span></p>
+          <p>
+            <span style="font-size:11pt;font-family:Inter,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;text-decoration:none;white-space:pre-wrap;">
+              <img src="data:image/png;base64,#{image_data}" width="192" height="192" style="border:none;">
+            </span>
+          </p>
         </b>
       HTML
     )
