@@ -18,4 +18,17 @@ module SystemTestHelper
       editor.dispatchEvent(new CustomEvent("lexxy:change", { bubbles: true }))
     JS
   end
+
+  def paste_into_lexxy_editor(html:, plain_text:)
+    execute_script <<~JS
+      const editor = document.querySelector("lexxy-editor")
+      const clipboard = new DataTransfer()
+      clipboard.setData("text/html", #{html.to_json})
+      clipboard.setData("text/plain", #{plain_text.to_json})
+      editor.selection.placeCursorAtTheEnd()
+      editor.querySelector(".lexxy-editor__content").dispatchEvent(
+        new ClipboardEvent("paste", { bubbles: true, cancelable: true, clipboardData: clipboard })
+      )
+    JS
+  end
 end

@@ -16,7 +16,7 @@ class HtmlScrubber < Rails::Html::PermitScrubber
   def initialize
     super
     self.tags = Rails::Html::WhiteListSanitizer.allowed_tags + %w[
-      audio details summary iframe options table tbody td th thead tr video source mark
+      audio details figcaption figure summary iframe options table tbody td th thead tr video source mark s u
     ]
     # Base on Loofah's vetted safe-attribute set rather than an unset list. An unset
     # list falls back to Loofah's default scrub, whose data-* wildcard lets stored

@@ -104,7 +104,11 @@ class HtmlScrubberTest < ActiveSupport::TestCase
   end
 
   test "preserves legitimate formatting, media, and table markup" do
-    assert_includes scrub("<p>Hello <strong>world</strong> <em>now</em></p>"), "<strong>world</strong>"
+    formatting = scrub("<p><strong>Bold</strong> <em>italic</em> <u>underlined</u> <s>struck</s></p>")
+    assert_includes formatting, "<strong>Bold</strong>"
+    assert_includes formatting, "<em>italic</em>"
+    assert_includes formatting, "<u>underlined</u>"
+    assert_includes formatting, "<s>struck</s>"
     assert_includes scrub(%(<a href="https://example.com" title="t">link</a>)), %(href="https://example.com")
     video = scrub(%(<video src="/uploads/v.mp4" controls></video>))
     assert_includes video, "<video"
@@ -112,5 +116,18 @@ class HtmlScrubberTest < ActiveSupport::TestCase
     table = scrub("<table><thead><tr><th>H</th></tr></thead><tbody><tr><td>D</td></tr></tbody></table>")
     assert_includes table, "<th>H</th>"
     assert_includes table, "<td>D</td>"
+  end
+
+  test "preserves Action Text attachment markup" do
+    result = scrub <<~HTML
+      <figure class="attachment attachment--preview">
+        <img src="/rails/active_storage/representation.png">
+        <figcaption class="attachment__caption">image.png</figcaption>
+      </figure>
+    HTML
+
+    assert_includes result, %(<figure class="attachment attachment--preview">)
+    assert_includes result, %(<img src="/rails/active_storage/representation.png">)
+    assert_includes result, %(<figcaption class="attachment__caption">image.png</figcaption>)
   end
 end

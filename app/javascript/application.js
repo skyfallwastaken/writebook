@@ -2,4 +2,4 @@
 import "@hotwired/turbo-rails"
 import "actions"
 import "controllers"
-import "lexxy"
+import "lib/google_docs_paste_extension"
