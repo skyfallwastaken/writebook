@@ -24,9 +24,12 @@ module BooksHelper
 
   def link_to_first_leafable(leaves)
     if first_leaf = leaves.first
-      link_to leafable_slug_path(first_leaf), data: hotkey_data_attributes("right"), class: "disable-when-arranging", hidden: true do
+      path = first_leaf.book.editable? ? edit_leafable_path(first_leaf) : leafable_slug_path(first_leaf)
+      action = first_leaf.book.editable? ? "Start writing" : "Start reading"
+
+      link_to path, data: hotkey_data_attributes("right"), class: "disable-when-arranging", hidden: true do
         tag.span(class: "btn") do
-          image_tag("arrow-right.svg", aria: { hidden: true }, size: 24) + tag.span("Start reading", class: "for-screen-reader")
+          image_tag("arrow-right.svg", aria: { hidden: true }, size: 24) + tag.span(action, class: "for-screen-reader")
         end + tag.span(first_leaf.title, class: "overflow-ellipsis")
       end
     end

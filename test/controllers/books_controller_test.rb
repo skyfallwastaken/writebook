@@ -79,6 +79,26 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "show links editors directly to edit pages" do
+    leaf = leaves(:welcome_page)
+
+    get book_slug_path(books(:handbook))
+
+    assert_select "a.toc__title[href='#{edit_leafable_path(leaf)}']", text: leaf.title
+    assert_select "a.toc__title[href='#{leafable_slug_path(leaf)}']", count: 0
+  end
+
+  test "show links readers to reader pages" do
+    book = books(:handbook)
+    leaf = leaves(:welcome_page)
+    book.access_for(user: users(:kevin)).update! level: :reader
+
+    get book_slug_path(book)
+
+    assert_select "a.toc__title[href='#{leafable_slug_path(leaf)}']", text: leaf.title
+    assert_select "a.toc__title[href='#{edit_leafable_path(leaf)}']", count: 0
+  end
+
   test "show includes OG metadata for public access" do
     get book_slug_url(books(:handbook))
     assert_response :success

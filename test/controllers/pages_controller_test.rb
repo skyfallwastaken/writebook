@@ -67,6 +67,18 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2, books(:handbook).leaves.before(Page.last.leaf).count
   end
 
+  test "edit shows history and save in the header" do
+    leaf = leaves(:welcome_page)
+    leaf.edit leafable_params: { body: "Changed" }
+
+    get edit_leafable_path(leaf)
+
+    assert_response :ok
+    assert_select "#header a[href='#{page_edit_path(leaf, "latest")}']", text: "Editing history"
+    assert_select "#header button[form='leafable-editor']", text: "Save"
+    assert_select "#toolbar .page-toolbar__save", count: 0
+  end
+
   test "update" do
     get edit_leafable_path(leaves(:welcome_page))
     assert_response :ok

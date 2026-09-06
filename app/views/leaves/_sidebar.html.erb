@@ -8,11 +8,7 @@
   <% book.leaves.active.with_leafables.positioned.each do |leaf| %>
     <li class="flex min-width <%= "leaf--section" if leaf.section? -%>">
       <% if leaf.book.editable? %>
-        <%= link_to edit_leafable_path(leaf), class: "toc__title hide_from_reading_mode min-width", data: { turbo_frame: "_top" } do %>
-          <span class="overflow-ellipsis"><%= leaf.title %></span>
-        <% end %>
-
-        <%= link_to leafable_slug_path(leaf), class: "toc__title hide_from_edit_mode min-width", data: { turbo_frame: "_top" } do %>
+        <%= link_to edit_leafable_path(leaf), class: "toc__title min-width", data: { turbo_frame: "_top" } do %>
           <span class="overflow-ellipsis"><%= leaf.title %></span>
         <% end %>
       <% else %>

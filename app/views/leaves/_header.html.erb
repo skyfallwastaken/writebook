@@ -23,12 +23,6 @@
 
 <% content_for :toolbar do %>
   <div class="flex flex-column">
-    <% if book.editable? %>
-      <div class="page-toolbar fill-shade">
-        <%= editing_mode_toggle_switch(@leaf, checked: false) %>
-      </div>
-    <% end %>
-
     <%= render "books/searches/banner" %>
   </div>
 <% end %>

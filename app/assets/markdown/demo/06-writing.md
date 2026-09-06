@@ -7,11 +7,9 @@ We've designed Writebook to be a calm, enjoyable and distraction-free place to w
 
 Here's what you need to know.
 
-## Editing mode
+## Writing pages
 
-The first step when working on your book is to flip the switch and enter _Editing mode_. That will reveal the page toolbar and save button. Edit mode stays on even as you move around to other pages in your book while working. You can turn it off when you're done working or toggle it anytime to preview your changes as readers will see them.
-
- ![edit-mode.gif](/u/edit-mode-ygeCcM.gif)
+When you open a page from the table of contents, you can start writing right away. The editor shows your text exactly as it will appear to readers.
 
 ## Autosave
 

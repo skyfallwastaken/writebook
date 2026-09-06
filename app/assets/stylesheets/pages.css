@@ -163,14 +163,6 @@
     }
   }
 
-body.edit-mode .hide_from_edit_mode {
-  display: none;
-}
-
-body:not(.edit-mode) .hide_from_reading_mode {
-  display: none;
-}
-
 .being-edited-by {
   animation: fade-out 300ms ease-out 20s;
   background-color: var(--color-ink);

@@ -14,6 +14,7 @@ class EditPageTest < ApplicationSystemTestCase
 
     click_button "Save"
 
+    assert_selector "#leafable-editor.clean"
     assert_selector ".lexxy-content", text: "Welcome to the handbook! This is the first page."
     assert_selector ".lexxy-content strong", text: "first"
   end

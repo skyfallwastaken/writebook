@@ -11,7 +11,7 @@ class Books::SearchesControllerTest < ActionDispatch::IntegrationTest
     post book_search_url(books(:handbook)), params: { search: "Thanks" }
 
     assert_response :success
-    assert_select "a", text: /Thanks for reading/i
+    assert_select "a[href='#{edit_leafable_path(leaves(:summary_page))}']", text: /Thanks for reading/i
   end
 
   test "create allows searching published books without being logged in" do
@@ -20,6 +20,7 @@ class Books::SearchesControllerTest < ActionDispatch::IntegrationTest
 
     post book_search_url(books(:handbook)), params: { search: "Thanks" }
     assert_response :success
+    assert_select "a[href='#{leafable_slug_path(leaves(:summary_page), search: "Thanks")}']", text: /Thanks for reading/i
 
     books(:handbook).update!(published: false)
 
@@ -73,7 +74,7 @@ class Books::SearchesControllerTest < ActionDispatch::IntegrationTest
     post book_search_url(books(:handbook)), params: { search: "findme" }
 
     assert_response :success
-    assert_select "a.search__result", count: 2 do |results|
+    assert_select "a.search__result", count: 1 do |results|
       results.each do |result|
         assert_pattern {
           result => {
@@ -95,7 +96,7 @@ class Books::SearchesControllerTest < ActionDispatch::IntegrationTest
     post book_search_url(books(:handbook)), params: { search: "findme" }
 
     assert_response :success
-    assert_select "a.search__result", count: 2 do |results|
+    assert_select "a.search__result", count: 1 do |results|
       results.each do |result|
         assert_pattern {
           result => {
@@ -116,7 +117,7 @@ class Books::SearchesControllerTest < ActionDispatch::IntegrationTest
     post book_search_url(books(:handbook)), params: { search: "findme" }
 
     assert_response :success
-    assert_select "a.search__result", count: 2 do |results|
+    assert_select "a.search__result", count: 1 do |results|
       results.each do |result|
         assert_pattern {
           result => {
@@ -138,7 +139,7 @@ class Books::SearchesControllerTest < ActionDispatch::IntegrationTest
     post book_search_url(books(:handbook)), params: { search: "findme" }
 
     assert_response :success
-    assert_select "a.search__result", count: 2 do |results|
+    assert_select "a.search__result", count: 1 do |results|
       results.each do |result|
         assert_pattern {
           result => {
@@ -208,7 +209,7 @@ class Books::SearchesControllerTest < ActionDispatch::IntegrationTest
     post book_search_url(books(:handbook)), params: { search: "findme" }
 
     assert_response :success
-    assert_select "a.search__result", count: 2 do |results|
+    assert_select "a.search__result", count: 1 do |results|
       results.each do |result|
         assert_pattern {
           result => {
@@ -237,7 +238,7 @@ class Books::SearchesControllerTest < ActionDispatch::IntegrationTest
     post book_search_url(books(:handbook)), params: { search: "findme" }
 
     assert_response :success
-    assert_select "a.search__result", count: 2 do |results|
+    assert_select "a.search__result", count: 1 do |results|
       results.each do |result|
         assert_pattern {
           result => {
