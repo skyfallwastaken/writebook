@@ -45,7 +45,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
     new_page = Page.last
     assert_equal "Another page", new_page.title
-    assert_equal "With interesting words.", new_page.body.content
+    assert_equal "With interesting words.", new_page.body.to_plain_text
     assert_equal books(:handbook), new_page.leaf.book
   end
 
@@ -76,11 +76,11 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
     updated_page = Page.last
     assert_equal "Better welcome", updated_page.title
-    assert_equal "With even more interesting words.", updated_page.body.content
+    assert_equal "With even more interesting words.", updated_page.body.to_plain_text
   end
 
   private
     def sample_page_leaf(markdown)
-      books(:handbook).press Page.new(body: markdown), title: "Sample"
+      books(:handbook).press Page.new(body: MarkdownRenderer.build.render(markdown)), title: "Sample"
     end
 end

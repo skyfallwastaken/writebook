@@ -7,14 +7,15 @@ module SystemTestHelper
     fill_in "email_address", with: email_address
     fill_in "password", with: password
 
-    click_on "log_in"
-    assert_selector "h2", text: "Handbook"
+    click_button "Sign in"
+    assert_selector "h2", text: "Handbook", wait: 15
   end
 
-  def fill_house_editor(name, content)
+  def fill_lexxy_editor(name, with:)
     execute_script <<~JS
       const editor = document.querySelector("[name='#{name}']")
-      editor.value = "#{escape_javascript(content)}"
+      editor.value = "#{escape_javascript(with)}"
+      editor.dispatchEvent(new CustomEvent("lexxy:change", { bubbles: true }))
     JS
   end
 end

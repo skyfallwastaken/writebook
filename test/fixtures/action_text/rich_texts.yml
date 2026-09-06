@@ -1,9 +1,9 @@
 welcome:
   record: welcome (Page)
   name: body
-  content: This is _such_ a great handbook.
+  body: <p>This is <em>such</em> a great handbook.</p>
 
 summary:
   record: summary (Page)
   name: body
-  content: Thanks for reading!
+  body: <p>Thanks for reading!</p>

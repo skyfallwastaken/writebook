@@ -12,7 +12,7 @@ class Pages::EditsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "p", /such a great handbook/
-    assert_select "p", /Completely new content/
+    assert_in_body "Completely new content"
   end
 
   test "show latest edit" do

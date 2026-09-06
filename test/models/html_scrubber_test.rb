@@ -6,7 +6,7 @@ class HtmlScrubberTest < ActiveSupport::TestCase
   end
 
   def render_and_scrub(markdown)
-    scrub(ActionText::Markdown.renderer.call.render(markdown))
+    scrub(MarkdownRenderer.build.render(markdown))
   end
 
   test "strips inline event handlers on allowed tags" do

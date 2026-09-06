@@ -5,7 +5,8 @@ pin "@hotwired/turbo-rails", to: "turbo.min.js"
 pin "@hotwired/stimulus", to: "stimulus.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin "@rails/request.js", to: "@rails--request.js" # @0.0.9
-pin "house", to: "house.min.js"
+pin "@rails/activestorage", to: "activestorage.esm.js"
+pin "lexxy", to: "lexxy.js"
 
 pin_all_from "app/javascript/actions", under: "actions"
 pin_all_from "app/javascript/controllers", under: "controllers"

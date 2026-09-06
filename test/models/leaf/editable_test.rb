@@ -4,10 +4,10 @@ class Leaf::EditableTest < ActiveSupport::TestCase
   test "editing a leafable records the edit" do
     leaves(:welcome_page).edit leafable_params: { body: "New body" }
 
-    assert_equal "New body", leaves(:welcome_page).page.body.content
+    assert_equal "New body", leaves(:welcome_page).page.body.to_plain_text
 
     assert leaves(:welcome_page).edits.last.revision?
-    assert_equal "This is _such_ a great handbook.", leaves(:welcome_page).edits.last.page.body.content
+    assert_equal "This is such a great handbook.", leaves(:welcome_page).edits.last.page.body.to_plain_text
   end
 
   test "edits that are close together don't create new revisions" do
@@ -22,7 +22,7 @@ class Leaf::EditableTest < ActiveSupport::TestCase
       leaves(:welcome_page).edit leafable_params: { body: "Second change" }
     end
 
-    assert_equal "Second change", leaves(:welcome_page).page.body.content
+    assert_equal "Second change", leaves(:welcome_page).page.body.to_plain_text
     assert_equal Time.now, leaves(:welcome_page).edits.last.updated_at
 
     travel 1.hour
@@ -61,6 +61,6 @@ class Leaf::EditableTest < ActiveSupport::TestCase
     assert leaves(:welcome_page).trashed?
 
     assert leaves(:welcome_page).edits.last.trash?
-    assert_equal "This is _such_ a great handbook.", leaves(:welcome_page).edits.last.page.body.content
+    assert_equal "This is such a great handbook.", leaves(:welcome_page).edits.last.page.body.to_plain_text
   end
 end

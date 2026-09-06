@@ -10,7 +10,7 @@ class BookTest < ActiveSupport::TestCase
     leaf = books(:manual).press Page.new(body: "Important words"), title: "Introduction"
 
     assert leaf.page?
-    assert_equal "Important words", leaf.page.body.content.to_s
+    assert_equal "Important words", leaf.page.body.to_plain_text
     assert_equal "Introduction", leaf.title
   end
 
@@ -26,7 +26,7 @@ class BookTest < ActiveSupport::TestCase
     leaves(:welcome_page).leafable.update!(body: "Welcome content")
     leaves(:summary_page).leafable.update!(body: "Summary content")
 
-    assert_includes books(:handbook).markable, "Welcome content\n\nSummary content"
+    assert_match(/Welcome content.*Summary content/m, books(:handbook).markable)
   end
 
   test "markable only includes active leaves" do

@@ -18,7 +18,7 @@
   </div>
 <% elsif @leaf.page? %>
   <div class="page--page" data-controller="scroll-to-highlight">
-    <%= highlight_searched_content @leaf, sanitize_content(@leaf.page.body.to_html), params[:search] %>
+    <%= highlight_searched_content @leaf, sanitize_content(@leaf.page.body.to_s), params[:search] %>
   </div>
 <% elsif @leaf.picture? %>
   <figure class="page--picture flex flex-column align-center gap margin-none">

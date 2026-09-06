@@ -104,7 +104,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     get book_slug_path(books(:handbook), format: :md)
 
     assert_response :success
-    assert_in_body "<div class='test'>"
+    assert_in_body '<div class="test">'
     assert_not_in_body "&lt;"
   end
 

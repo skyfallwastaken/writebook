@@ -2,5 +2,4 @@
 import "@hotwired/turbo-rails"
 import "actions"
 import "controllers"
-import "house"
-
+import "lexxy"

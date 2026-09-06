@@ -3,9 +3,23 @@ require "rouge/plugins/redcarpet"
 class MarkdownRenderer < Redcarpet::Render::HTML
   include Rouge::Plugins::Redcarpet
 
+  DEFAULT_RENDERER_OPTIONS = {
+    filter_html: false
+  }.freeze
+
+  DEFAULT_MARKDOWN_EXTENSIONS = {
+    autolink: true,
+    highlight: true,
+    no_intra_emphasis: true,
+    fenced_code_blocks: true,
+    lax_spacing: true,
+    strikethrough: true,
+    tables: true
+  }.freeze
+
   def self.build
-    renderer = MarkdownRenderer.new(ActionText::Markdown::DEFAULT_RENDERER_OPTIONS)
-    Redcarpet::Markdown.new(renderer, ActionText::Markdown::DEFAULT_MARKDOWN_EXTENSIONS)
+    renderer = new(DEFAULT_RENDERER_OPTIONS)
+    Redcarpet::Markdown.new(renderer, DEFAULT_MARKDOWN_EXTENSIONS)
   end
 
   def initialize(*args)

@@ -1,0 +1,40 @@
+@import url("lexxy-variables.css");
+@import url("lexxy-content.css");
+@import url("lexxy-editor.css");
+
+:root {
+  --lexxy-color-canvas: var(--color-bg);
+  --lexxy-color-text: var(--color-ink);
+  --lexxy-color-text-subtle: var(--color-subtle-dark);
+  --lexxy-color-link: var(--color-link);
+  --lexxy-color-selected: var(--color-selected);
+  --lexxy-color-selected-hover: var(--color-selected-dark);
+  --lexxy-color-selected-dark: var(--color-link);
+  --lexxy-color-code-bg: var(--color-subtle-light);
+  --lexxy-color-ink: var(--color-ink);
+  --lexxy-color-ink-medium: var(--color-subtle-dark);
+  --lexxy-color-ink-lighter: var(--color-subtle);
+  --lexxy-color-ink-lightest: var(--color-subtle-light);
+  --lexxy-focus-ring-color: var(--color-link);
+  --lexxy-font-base: var(--font-sans);
+  --lexxy-font-mono: var(--font-mono);
+}
+
+:where(lexxy-editor.page__editor) {
+  --lexxy-editor-padding: 0;
+  --lexxy-editor-rows: 50dvh;
+
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  flex-grow: 1;
+
+  &:invalid {
+    outline: 2px solid var(--color-negative);
+  }
+}
+
+:where(.lexxy-content) {
+  caret-color: var(--color-link);
+  text-align: start;
+}

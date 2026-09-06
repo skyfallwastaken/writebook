@@ -68,11 +68,6 @@ Rails.application.routes.draw do
     route_for "edit_book_#{leaf.leafable_name}", leaf.book, leaf, options
   end
 
-  namespace :action_text, path: nil do
-    get "/u/*slug" => "markdown/uploads#show", as: :markdown_upload
-    post "/uploads" => "markdown/uploads#create", as: :markdown_uploads
-  end
-
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

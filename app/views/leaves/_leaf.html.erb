@@ -53,7 +53,7 @@
 
     <small class="toc__wordcount txt-small--responsive">
       <% if leaf.page? %>
-        <%= word_count(leaf.leafable.body.content) %>
+        <%= word_count(leaf.leafable.body.to_plain_text) %>
       <% end %>
     </small>
   <% end %>

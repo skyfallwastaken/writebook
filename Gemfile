@@ -20,6 +20,7 @@ gem "propshaft"
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
+gem "lexxy", "0.9.31"
 
 # Other
 gem "jbuilder"

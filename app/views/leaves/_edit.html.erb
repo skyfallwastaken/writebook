@@ -6,7 +6,7 @@
 
   <%= link_to leafable_path(leaf), class: "toc__thumbnail", data: { turbo_frame: "_top" } do %>
     <%= leaf.section.body if leaf.section? %>
-    <%= sanitize_content(leaf.leafable.body.to_html) if leaf.page? %>
+    <%= sanitize_content(leaf.leafable.body.to_s) if leaf.page? %>
     <%= image_tag leaf.leafable.large_image if leaf.picture&.image&.attached? %>
   <% end %>
 
@@ -30,7 +30,7 @@
 
   <small class="toc__wordcount">
     <% if leaf.page? %>
-      <%= word_count(leaf.leafable.body.content) %>
+      <%= word_count(leaf.leafable.body.to_plain_text) %>
     <% end %>
   </small>
 

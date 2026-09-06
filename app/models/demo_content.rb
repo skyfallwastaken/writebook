@@ -32,7 +32,8 @@ class DemoContent
       end
 
       def load_markdown_page(book, front_matter)
-        book.press(Page.new(body: front_matter.content), title: front_matter["title"]).page
+        body = MarkdownRenderer.build.render(front_matter.content)
+        book.press(Page.new(body: body), title: front_matter["title"]).page
       end
 
       def load_section(book, front_matter)
@@ -40,42 +41,33 @@ class DemoContent
       end
 
       def attach_images(page)
-        re = %r{
-          \/u\/           # leading portion of path
-          (\S+-\w+\.\w+)  # filename including slug and extension
-        }x
+        body = Nokogiri::HTML5.fragment(page.body.body.to_html)
 
-        body = page.body.content.gsub(re) do |match|
-          with_attachment($1) { |attachment| page.body.uploads.attach(attachment) }
-
-          attachment = page.body.uploads.attachments.last
-          attachment.analyze
-
-          "/u/" + attachment.slug
+        body.css("img[src^='/u/']").each do |image|
+          filename = File.basename(image["src"])
+          with_attachment(filename) do |attachment|
+            blob = ActiveStorage::Blob.create_and_upload!(**attachment)
+            replaceable = image.parent.name == "a" ? image.parent : image
+            replaceable.replace(ActionText::Attachment.from_attachable(blob).to_html)
+          end
         end
 
-        page.update!(body: body)
+        page.update!(body: body.to_html)
       end
 
       def localize_ref_links(page, pages)
-        re = %r{
-          (\[.+\])              # link title
-          \(                    # opening paren
-          \/\d+\/[\w-]+\/\d+\/  # leading portion of path
-          ([\w-]+)              # leaf slug
-        }x
+        body = Nokogiri::HTML5.fragment(page.body.body.to_html)
 
-        body = page.body.content.gsub(re) do |match|
-          link_title, leaf_slug, anchor = $1, $2, $3
-          linked_page = pages[leaf_slug]
-          raise "Invalid reference link: #{page_title}" unless linked_page.present?
+        body.css("a[href]").each do |link|
+          next unless link["href"] =~ %r{\A/\d+/[\w-]+/\d+/([\w-]+)(.*)\z}
 
-          url = Rails.application.routes.url_helpers.leafable_slug_path(linked_page.leaf, anchor: anchor, only_path: true)
+          linked_page = pages[$1]
+          raise "Invalid reference link: #{link.text}" unless linked_page.present?
 
-          "#{link_title}(#{url}"
+          link["href"] = Rails.application.routes.url_helpers.leafable_slug_path(linked_page.leaf, only_path: true) + $2
         end
 
-        page.update!(body: body)
+        page.update!(body: body.to_html)
       end
 
       def with_attachment(filename)

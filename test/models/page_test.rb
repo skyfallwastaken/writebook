@@ -2,16 +2,16 @@ require "test_helper"
 
 class PageTest < ActiveSupport::TestCase
   test "html preview" do
-    page = Page.new(body: "# Hello\n\nWorld!")
+    page = Page.new(body: "<h1>Hello</h1><p>World!</p>")
 
     assert_match /<h1>Hello<\/h1>/, page.html_preview
     assert_match /<p>World!<\/p>/, page.html_preview
   end
 
-  test "markable returns raw markdown content" do
-    page = Page.new(body: "## Markdown Content\n\nWith **bold** text.")
+  test "markable returns rich text HTML" do
+    page = Page.new(body: "<h2>Rich text content</h2><p>With <strong>bold</strong> text.</p>")
 
-    assert_equal "## Markdown Content\n\nWith **bold** text.", page.markable
+    assert_includes page.markable, "<h2>Rich text content</h2><p>With <strong>bold</strong> text.</p>"
   end
 
   test "markable returns empty string when body is empty" do

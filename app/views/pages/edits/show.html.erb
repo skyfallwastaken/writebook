@@ -51,7 +51,7 @@
         <% end %>
       </header>
 
-      <%= sanitize_content(@edit.page.body.to_html) %>
+      <%= sanitize_content(@edit.page.body.to_s) %>
     <% end %>
   </section>
 
@@ -62,6 +62,6 @@
       <% end %>
     </header>
 
-    <%= sanitize_content(@leaf.page.body.to_html) %>
+    <%= sanitize_content(@leaf.page.body.to_s) %>
   </section>
 </div>

@@ -20,7 +20,7 @@ module LeavesHelper
     form_with model: leafable, url: leafable_path(leafable.leaf), method: :put, format: :html,
     data: {
       controller: "autosave",
-      action: "autosave#submit:prevent input@document->autosave#change house-md:change->autosave#change",
+      action: "autosave#submit:prevent input@document->autosave#change lexxy:change->autosave#change",
       autosave_clean_class: "clean",
       autosave_dirty_class: "dirty",
       autosave_saving_class: "saving"
