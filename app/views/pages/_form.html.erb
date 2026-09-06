@@ -1,3 +1,6 @@
+<%# Keep Cloudflare from rewriting the editor's content, without disabling obfuscation on reading views. %>
+<!--email_off-->
 <%= leafable_edit_form(page, id: "leafable-editor") do |form| %>
   <%= form.rich_text_area :body, required: true, autofocus: true, class: "page__editor lexxy-content" %>
 <% end %>
+<!--/email_off-->
